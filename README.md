@@ -9,12 +9,12 @@
 | Name  |E.T.|Github  |
 | :------------ |:---------------:| :-----|
 | 하성민      |Team Leader |https://github.com/xman227 |
-| 강윤경      |Front-end| |
+| 강윤경      |Front-end| - |
 | 이은정      |Front-end|https://github.com/eunjung0301 |
 | 이승현      |Back-end|https://github.com/cookie0010  |
 | 한재경      |Back-end|https://github.com/hanjaegyeong|
-| 박재형      |Back-end|  |
-| 김지헌      |AI |  |
+| 박재형      |Back-end| 입력 부탁드립니다. |
+| 김지헌      |AI | 입력 부탁드립니다. |
 
 ## 📃 Notion Page
 [Makeat](https://www.notion.so/54ef303914d8436087b72f218d79045c)
