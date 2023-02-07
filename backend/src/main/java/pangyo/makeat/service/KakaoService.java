@@ -1,4 +1,4 @@
-package pangyo.makeat;
+package pangyo.makeat.service;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
