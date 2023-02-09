@@ -3,7 +3,7 @@
 ## Make - eat
 - **나는 곧 내가 먹는 것이다**
 - **우리 App이 제시해주는 대로만 막 eat 해라!**
-- 테스트중! - 승현
+- 테스트중! - 승현 - 고생하네요 - 성민
 
 ## 🤔 Who Make it?
 
@@ -15,7 +15,7 @@
 | 이승현      |Back-end|https://github.com/cookie0010  |
 | 한재경      |Back-end|https://github.com/hanjaegyeong|
 | 박재형      |Back-end|https://github.com/jaehyeong0917|
-| 김지헌      |AI | 입력 부탁드립니다. |
+| 김지헌      |AI |https://github.com/ben8169|
 
 ## 📃 Notion Page
 [Makeat](https://www.notion.so/54ef303914d8436087b72f218d79045c)
