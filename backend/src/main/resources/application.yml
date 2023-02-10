@@ -5,15 +5,15 @@ spring:
     username: root
     password: 123
 
-#  jpa:
-#    hibernate:
-#      ddl-auto: create
-#    properties:
-#      hibernate:
-#        format_sql: true
-#
-#
-#logging:
-#  level:
-#    org.hibernate.sql: debug
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+
+
+logging:
+  level:
+    org.hibernate.sql: debug
 
