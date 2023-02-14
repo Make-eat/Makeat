@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
+@Entity // 테이블
 @Getter
 @Setter
 public class UserInfo {
@@ -15,10 +15,10 @@ public class UserInfo {
     @OneToOne
     @JoinColumn(name = "user_id")
     private Users userId;
-    private Integer age;
+    private int age;
     private String gender;
-    private Integer height;
-    private Integer weight;
+    private int height;
+    private int weight;
     private String bmi;
 
 }
