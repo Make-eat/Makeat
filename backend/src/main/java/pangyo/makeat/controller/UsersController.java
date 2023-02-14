@@ -1,23 +1,24 @@
 package pangyo.makeat.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import pangyo.makeat.service.KakaoService;
+
 
 import java.io.IOException;
 import java.util.Map;
 
+@Slf4j
 @Controller
-@RequestMapping("/member")
-public class KakaoController {
+@RequestMapping("/users")
+public class UsersController {
     @Autowired
     KakaoService ks;
 
-    @GetMapping("/do")
+    @GetMapping("/login")
     public String loginPage()
     {
         return "kakaoCI/login";
@@ -34,6 +35,18 @@ public class KakaoController {
 
         //ci는 비즈니스 전환후 검수신청 -> 허락받아야 수집 가능
         return "index";
+    }
+
+    @GetMapping("/info/{userToken}")
+    public String getUserData(@PathVariable String userToken) {
+        log.info("mappingPath userId={}", userToken);
+        return "ok";
+    }
+
+    @PostMapping("/info/{userToken}")
+    public String postUserData(@PathVariable String userToken) {
+        log.info("mappingPath userId={}", userToken);
+        return "ok";
     }
 
 }

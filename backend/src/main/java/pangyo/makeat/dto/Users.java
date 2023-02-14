@@ -12,7 +12,7 @@ import lombok.Setter;
 public class Users {
     @Id @GeneratedValue
     @Column(name="user_id")
-    private String userId;
+    private Long userId;
     @Column(name="kakao_id")
     private Long kakaoId;
     @Column(name="user_token")
