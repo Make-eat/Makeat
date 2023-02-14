@@ -29,7 +29,7 @@ public class KakaoService {
             StringBuilder sb = new StringBuilder();
             sb.append("grant_type=authorization_code");
             sb.append("&client_id=c9b86f5811b4189e82cc4d3bd36f74d1");
-            sb.append("&redirect_uri=http://localhost:8080/member/kakao");
+            sb.append("&redirect_uri=http://localhost:8080/users/kakao");
             sb.append("&code=" + code);
 
             bw.write(sb.toString());
