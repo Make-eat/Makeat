@@ -14,32 +14,40 @@ public class UsersRepositoryTest {
     @Autowired
     UsersRepository usersRepository;
 
-    @AfterEach
-    public void cleanup() {
-        usersRepository.deleteAll();
-    }
+//    @AfterEach
+//    public void cleanup() {
+//        usersRepository.deleteAll();
+//    }
 
     @Test
     public void saveAndReadPosts() {
         //given
         Users user = new Users();
 
-        Long userId = 1L;
         Long kakaoId = 1L;
         String userToken = "a1b2";
 
         user.setKakaoId(kakaoId);
         user.setUserToken(userToken);
-        user.setUserId(userId);
 
         usersRepository.save(user);
+
+        Users user2 = new Users();
+
+        Long kakaoId2 = 2L;
+        String userToken2 = "a1b2c3";
+
+        user.setKakaoId(kakaoId2);
+        user.setUserToken(userToken2);
+
+        usersRepository.save(user2);
 
         //when
         List<Users> usersList = usersRepository.findAll();
 
         //then
-        Users users = usersList.get(0);
-        assertThat(users.getUserId()).isEqualTo(userId);
-        System.out.println(userId);
+        Users users = usersList.get(1);
+        assertThat(users.getUserId()).isEqualTo(2);
+        System.out.println(users.getUserId());
     }
 }
