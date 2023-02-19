@@ -16,7 +16,8 @@ public class UserInfo {
     @JoinColumn(name = "user_id")
     private Users userId;
     private int age;
-    private String gender;
+    @Enumerated(EnumType.STRING)
+    private InfoGender gender; // M, W
     private int height;
     private int weight;
     private String bmi;
