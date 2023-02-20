@@ -11,6 +11,7 @@ import pangyo.makeat.repository.UserInfoRepository;
 import pangyo.makeat.repository.UsersRepository;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @Service
 public class UserInfoService {
@@ -20,7 +21,7 @@ public class UserInfoService {
     @Autowired
     UsersRepository usersRepository;
 
-    public Users findUserInfo(String kakaoId) throws IOException {
+    public Users findUsers(String kakaoId) throws IOException {
         return usersRepository.findById(kakaoId).get();
     }
 
@@ -35,5 +36,11 @@ public class UserInfoService {
         userinfo.setWeight(weight);
         userinfo.setBmi(bmi);
         userInfoRepository.save(userinfo);
+    }
+
+    @Transactional
+    public Optional<UserInfo> findUserInfo(String kakaoId) {
+        Users user = usersRepository.findById(kakaoId).get();
+        return userInfoRepository.findByUserId(user.getUserId());
     }
 }
