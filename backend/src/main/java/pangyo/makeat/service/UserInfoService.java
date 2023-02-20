@@ -20,6 +20,10 @@ public class UserInfoService {
     @Autowired
     UsersRepository usersRepository;
 
+    public Users findUserInfo(String kakaoId) throws IOException {
+        return usersRepository.findById(kakaoId).get();
+    }
+
     @Transactional
     public void saveUserInfo(String kakaoId, int age, String gender, int height, int weight, float bmi) throws IOException {
         UserInfo userinfo = new UserInfo();

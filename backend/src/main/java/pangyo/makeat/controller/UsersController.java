@@ -3,10 +3,12 @@ package pangyo.makeat.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pangyo.makeat.dto.Users;
 import pangyo.makeat.service.KakaoService;
 import pangyo.makeat.service.UserInfoService;
 
@@ -31,9 +33,10 @@ public class UsersController {
      */
     //회원 정보 GET
     @GetMapping("/info/{kakaoId}")
-    public String getUserInfo(@PathVariable String kakaoId) {
+    public Users getUserInfo(@PathVariable String kakaoId) throws IOException {
         log.info("mappingPath userId={}", kakaoId);
-        return "userdata"; //user info json 보내기
+        Users users = us.findUserInfo(kakaoId);
+        return users; //user info json 보내기
     }
 
     //회원 정보 수정 란에서 최초 회원 정보 저장
