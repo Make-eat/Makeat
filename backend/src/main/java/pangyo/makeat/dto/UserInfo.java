@@ -20,6 +20,6 @@ public class UserInfo {
     private InfoGender gender; // M, W
     private int height;
     private int weight;
-    private String bmi;
+    private float bmi;
 
 }
