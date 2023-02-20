@@ -14,11 +14,11 @@ public class RecordedFood {
     @Column(name = "recorded_food_id")
     private String recordedFoodId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "food_id")
     private Food foodId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "record_id")
     private DietRecord recordId;
 }

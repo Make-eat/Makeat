@@ -12,7 +12,7 @@ public class Qna {
     @Column(name="qna_id")
     private String qnaId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private Users userId;
 

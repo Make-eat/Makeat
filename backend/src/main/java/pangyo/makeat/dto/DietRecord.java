@@ -16,15 +16,15 @@ public class DietRecord {
     @Column(name = "record_id")
     private String recordId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "total_id")
     private NutrientTotal totalId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private Users userId;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="nut_id")
     private Nutrient nutId;
 
