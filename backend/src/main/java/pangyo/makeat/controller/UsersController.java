@@ -3,7 +3,6 @@ package pangyo.makeat.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +11,7 @@ import pangyo.makeat.dto.UserInfo;
 import pangyo.makeat.dto.Users;
 import pangyo.makeat.service.KakaoService;
 import pangyo.makeat.service.UserInfoService;
+import pangyo.makeat.service.UsersService;
 
 
 import java.io.IOException;
@@ -19,14 +19,16 @@ import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
-@Controller
+@RestController
 @RequestMapping("/users")
 public class UsersController {
 
     @Autowired
     KakaoService ks;
     @Autowired
-    UserInfoService us;
+    UserInfoService uis;
+    @Autowired
+    UsersService us;
 
     /**
      * users/info
@@ -36,7 +38,7 @@ public class UsersController {
     //회원 정보 GET
     @GetMapping("/info/{kakaoId}")
     public UserInfo getUserInfo(@PathVariable String kakaoId) throws IOException {
-        Optional<UserInfo> userInfo = us.findUserInfo(kakaoId);
+        Optional<UserInfo> userInfo = uis.findUserInfo(kakaoId);
         log.info("userinfo: {}", userInfo.get());
         return userInfo.get(); //user info json 보내기
     }
@@ -51,7 +53,7 @@ public class UsersController {
         int weight = Integer.parseInt(request.getParameter("weight"));
         float bmi = Float.parseFloat(request.getParameter("bmi"));
 
-        us.saveUserInfo(kakaoId, age, gender, height, weight, bmi);
+        uis.saveUserInfo(kakaoId, age, gender, height, weight, bmi);
     }
 
     //회원 정보 수정
@@ -62,7 +64,7 @@ public class UsersController {
         int height = Integer.parseInt(request.getParameter("height"));
         int weight = Integer.parseInt(request.getParameter("weight"));
         float bmi = Float.parseFloat(request.getParameter("bmi"));
-        us.saveUserInfo(kakaoId, age, gender, height, weight, bmi);
+        uis.saveUserInfo(kakaoId, age, gender, height, weight, bmi);
     }
 
     //회원 탈퇴
@@ -70,7 +72,7 @@ public class UsersController {
     @DeleteMapping("/info/{kakaoId}")
     public void deleteUserInfo(@PathVariable String kakaoId) throws IOException {
         log.info("mappingPath userId={}", kakaoId);
-        Optional<UserInfo> users = us.findUserInfo(kakaoId);
+        Optional<UserInfo> users = uis.findUserInfo(kakaoId);
     }
 
     /**
@@ -93,6 +95,18 @@ public class UsersController {
 
         //ci는 비즈니스 전환후 검수신청 -> 허락받아야 수집 가능
         return "index"; //userInfo의 id값 바로 넘겨주기
+    }
+
+    /**
+     * Register
+     */
+    @PostMapping("/register/{kakaoId}")
+    public String makeUser(@PathVariable String kakaoId) throws IOException {
+        us.saveUser(kakaoId);
+        us.findAllUsers();
+        return "ok";
+
+
     }
 
     /**
