@@ -10,6 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/record")
 public class RecordController {
-//    @GetMapping("/")
+//
+//    @GetMapping("/{kakaoId}/image")
+//    public void
+//
+//    @GetMapping("/save")
+//    public void getRecordSave() {
+
+    }
+
 
 }
