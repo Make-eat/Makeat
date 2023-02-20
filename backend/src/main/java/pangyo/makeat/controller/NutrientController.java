@@ -14,10 +14,9 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.HashMap;
 
 @RestController
-public class ApiController {
+public class NutrientController {
 
     @GetMapping("/api")
     public static void getApi(String[] args) throws IOException, ParseException {
