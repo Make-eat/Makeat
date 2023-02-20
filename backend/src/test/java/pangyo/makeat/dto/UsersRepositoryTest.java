@@ -1,9 +1,9 @@
 package pangyo.makeat.dto;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import pangyo.makeat.repository.UsersRepository;
 
 import java.util.List;
 
@@ -24,21 +24,17 @@ public class UsersRepositoryTest {
         //given
         Users user = new Users();
 
-        Long kakaoId = 1L;
-        String userToken = "a1b2";
+        String kakaoId = "abc";
 
         user.setKakaoId(kakaoId);
-        user.setUserToken(userToken);
 
         usersRepository.save(user);
 
         Users user2 = new Users();
 
-        Long kakaoId2 = 2L;
-        String userToken2 = "a1b2c3";
+        String kakaoId2 = "def";
 
         user.setKakaoId(kakaoId2);
-        user.setUserToken(userToken2);
 
         usersRepository.save(user2);
 
