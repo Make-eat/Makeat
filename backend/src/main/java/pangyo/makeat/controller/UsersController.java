@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pangyo.makeat.service.KakaoService;
+import pangyo.makeat.service.UserDataService;
 
 
 import java.io.IOException;
@@ -17,7 +18,24 @@ import java.util.Map;
 public class UsersController {
     @Autowired
     KakaoService ks;
+    @Autowired
+    UserDataService us;
 
+    //Users
+    @GetMapping("/info/{kakaoId}")
+    public String getUserData(@PathVariable String kakaoId) {
+        log.info("mappingPath userId={}", kakaoId);
+        return "userdata"; //유저 정보 페이지
+    }
+
+    @PostMapping("/info/{kakaoId}")
+    public void postUserData(@PathVariable String kakaoId) throws IOException {
+        us.saveUserData(kakaoId);
+        log.info("mappingPath userId={}", kakaoId);
+
+    }
+
+    //Login
     @GetMapping("/login")
     public String loginPage()
     {
@@ -37,16 +55,10 @@ public class UsersController {
         return "index";
     }
 
-    @GetMapping("/info/{userToken}")
-    public String getUserData(@PathVariable String userToken) {
-        log.info("mappingPath userId={}", userToken);
-        return "ok";
-    }
-
-    @PostMapping("/info/{userToken}")
-    public String postUserData(@PathVariable String userToken) {
-        log.info("mappingPath userId={}", userToken);
-        return "ok";
+    //QnA
+    @GetMapping("/info/qna")
+    public String getQna() {
+        return "qna";
     }
 
 }
