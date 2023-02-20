@@ -14,7 +14,7 @@ public class Users {
     @Column(name="user_id")
     private Long userId;
     @Column(name="kakao_id")
-    private Long kakaoId;
+    private String kakaoId;
     @Column(name="user_token")
     private String userToken;
 }

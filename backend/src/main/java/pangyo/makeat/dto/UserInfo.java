@@ -12,7 +12,7 @@ public class UserInfo {
     @GeneratedValue
     @Column(name = "info_id")
     private String infoId;
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private Users userId;
     private int age;
