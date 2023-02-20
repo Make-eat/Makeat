@@ -1,12 +1,14 @@
 package pangyo.makeat.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pangyo.makeat.service.KakaoService;
-import pangyo.makeat.service.UserDataService;
+import pangyo.makeat.service.UserInfoService;
 
 
 import java.io.IOException;
@@ -20,19 +22,41 @@ public class UsersController {
     @Autowired
     KakaoService ks;
     @Autowired
-    UserDataService us;
+    UserInfoService us;
 
-    //Users
+    /**
+     * users/info
+     * @param kakaoId
+     * @return
+     */
+    //회원 정보 GET
     @GetMapping("/info/{kakaoId}")
-    public String getUserData(@PathVariable String kakaoId) {
+    public String getUserInfo(@PathVariable String kakaoId) {
         log.info("mappingPath userId={}", kakaoId);
-        return "userdata"; //유저 정보 페이지
+        return "userdata"; //user info json 보내기
     }
 
+    //회원 정보 수정 란에서 최초 회원 정보 저장
+    //getParameter()는 GET의 쿼리파라미터, POST Form 파라미터 모두 꺼낼 수 있음
     @PostMapping("/info/{kakaoId}")
-    public void postUserData(@PathVariable String kakaoId) throws IOException {
-        us.saveUserData(kakaoId);
-        log.info("mappingPath userId={}", kakaoId);
+    public void postUserInfo(@PathVariable String kakaoId, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int age = Integer.parseInt(request.getParameter("age"));
+        String gender = request.getParameter("gender");
+        int height = Integer.parseInt(request.getParameter("height"));
+        int weight = Integer.parseInt(request.getParameter("weight"));
+        float bmi = Float.parseFloat(request.getParameter("bmi"));
+        us.saveUserInfo(kakaoId, age, gender, height, weight, bmi);
+    }
+
+    //회원 정보 수정
+    @PutMapping("/info/{kakaoId}")
+    public void putUserInfo(@PathVariable String kakaoId, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int age = Integer.parseInt(request.getParameter("age"));
+        String gender = request.getParameter("gender");
+        int height = Integer.parseInt(request.getParameter("height"));
+        int weight = Integer.parseInt(request.getParameter("weight"));
+        float bmi = Float.parseFloat(request.getParameter("bmi"));
+        us.saveUserInfo(kakaoId, age, gender, height, weight, bmi);
     }
 
     //Login
@@ -51,7 +75,7 @@ public class UsersController {
         model.addAttribute("userInfo", userInfo);
 
         //ci는 비즈니스 전환후 검수신청 -> 허락받아야 수집 가능
-        return "index";
+        return "index"; //userInfo의 id값 바로 넘겨주기
     }
 
     //QnA
