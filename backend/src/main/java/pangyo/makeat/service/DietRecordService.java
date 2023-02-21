@@ -8,22 +8,19 @@ import pangyo.makeat.repository.DietRecordRepository;
 
 @Service
 public class DietRecordService {
-//
-//    @Autowired
-//    DietRecordRepository dietRecordRepository;
-//
-//    @Transactional
-//    public void saveDietRecord(String date, String createdAt, String updatedAt, String comment,
-//                               String imgUrl, String analyzedImgUrl) {
-//        DietRecord dietRecord = new DietRecord();
-//        dietRecord.setDate(date);
-//        dietRecord.setCreatedAt(createdAt);
-//        dietRecord.setUpdatedAt(updatedAt);
-//        dietRecord.setComment(comment);
-//        dietRecord.setImgUrl(imgUrl);
-//        dietRecord.setAnalyzedImgUrl(analyzedImgUrl);
-//
-//        dietRecordRepository.save(dietRecord);
-//    }
+
+    @Autowired
+    DietRecordRepository dietRecordRepository;
+
+    @Transactional
+    public void saveDietRecord(String date, String createdAt, String updatedAt, String comment) {
+        DietRecord dietRecord = new DietRecord();
+        dietRecord.setDate(date);
+        dietRecord.setCreatedAt(createdAt);
+        dietRecord.setUpdatedAt(updatedAt);
+        dietRecord.setComment(comment);
+
+        dietRecordRepository.save(dietRecord);
+    }
 
 }
