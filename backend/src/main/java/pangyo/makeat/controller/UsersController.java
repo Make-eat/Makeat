@@ -4,27 +4,19 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pangyo.makeat.dto.UserInfo;
-import pangyo.makeat.dto.Users;
-import pangyo.makeat.service.KakaoService;
 import pangyo.makeat.service.UserInfoService;
 import pangyo.makeat.service.UsersService;
 
 
 import java.io.IOException;
-import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
 @RestController
 @RequestMapping("/users")
 public class UsersController {
-
-    @Autowired
-    KakaoService ks;
     @Autowired
     UserInfoService uis;
     @Autowired
@@ -79,22 +71,9 @@ public class UsersController {
      * Login
      * @return
      */
-    @GetMapping("/login")
-    public String loginPage(){
-        return "kakaoCI/login";
-    }
-
-    @GetMapping("/kakao")
-    public String getCI(@RequestParam String code, Model model) throws IOException, IOException {
-        System.out.println("code = " + code);
-        String access_token = ks.getToken(code);
-        Map<String, Object> userInfo = ks.getUserInfo(access_token);
-        model.addAttribute("code", code);
-        model.addAttribute("access_token", access_token);
-        model.addAttribute("userInfo", userInfo);
-
-        //ci는 비즈니스 전환후 검수신청 -> 허락받아야 수집 가능
-        return "index"; //userInfo의 id값 바로 넘겨주기
+    @GetMapping("/login/{kakaoId}")
+    public boolean loginPage(@PathVariable String kakaoId){
+        return us.checkExistUsers(kakaoId);
     }
 
     /**

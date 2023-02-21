@@ -7,6 +7,7 @@ import pangyo.makeat.dto.Users;
 import pangyo.makeat.repository.UsersRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsersService {
@@ -27,5 +28,20 @@ public class UsersService {
         for (int i=0; i < usersList.size(); i++){
             System.out.println(usersList.get(i));
         }
+    }
+
+    public Optional<Users> findUsers(String kakaoId) {
+        Optional<Users> users = usersRepository.findByKakaoId(kakaoId);
+        return users;
+    }
+
+    public boolean checkExistUsers(String kakaoId) {
+        Optional<Users> users = usersRepository.findByKakaoId(kakaoId);
+        if (users.isPresent()) { //이미 가입된 사용자
+            return true;
+        }
+        //미가입 사용자->새로 가입시키기
+        saveUser(kakaoId);
+        return false;
     }
 }
