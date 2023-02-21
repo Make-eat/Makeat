@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pangyo.makeat.dto.UserInfo;
 import pangyo.makeat.dto.Users;
 import pangyo.makeat.service.KakaoService;
 import pangyo.makeat.service.UserInfoService;
@@ -15,6 +16,7 @@ import pangyo.makeat.service.UserInfoService;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -33,10 +35,10 @@ public class UsersController {
      */
     //회원 정보 GET
     @GetMapping("/info/{kakaoId}")
-    public Users getUserInfo(@PathVariable String kakaoId) throws IOException {
-        log.info("mappingPath userId={}", kakaoId);
-        Users users = us.findUserInfo(kakaoId);
-        return users; //user info json 보내기
+    public UserInfo getUserInfo(@PathVariable String kakaoId) throws IOException {
+        Optional<UserInfo> userInfo = us.findUserInfo(kakaoId);
+        log.info("userinfo: {}", userInfo.get());
+        return userInfo.get(); //user info json 보내기
     }
 
     //회원 정보 수정 란에서 최초 회원 정보 저장
@@ -48,6 +50,7 @@ public class UsersController {
         int height = Integer.parseInt(request.getParameter("height"));
         int weight = Integer.parseInt(request.getParameter("weight"));
         float bmi = Float.parseFloat(request.getParameter("bmi"));
+
         us.saveUserInfo(kakaoId, age, gender, height, weight, bmi);
     }
 
@@ -62,7 +65,18 @@ public class UsersController {
         us.saveUserInfo(kakaoId, age, gender, height, weight, bmi);
     }
 
-    //Login
+    //회원 탈퇴
+    //수정중
+    @DeleteMapping("/info/{kakaoId}")
+    public void deleteUserInfo(@PathVariable String kakaoId) throws IOException {
+        log.info("mappingPath userId={}", kakaoId);
+        Optional<UserInfo> users = us.findUserInfo(kakaoId);
+    }
+
+    /**
+     * Login
+     * @return
+     */
     @GetMapping("/login")
     public String loginPage(){
         return "kakaoCI/login";
@@ -81,7 +95,10 @@ public class UsersController {
         return "index"; //userInfo의 id값 바로 넘겨주기
     }
 
-    //QnA
+    /**
+     * QnA
+     * @return
+     */
     @GetMapping("/info/qna")
     public String getQna() {
         return "qna";
