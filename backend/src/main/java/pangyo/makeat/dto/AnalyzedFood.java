@@ -17,7 +17,6 @@ public class AnalyzedFood {
     @JoinColumn(name = "analyzed_data_id")
     private AnalyzedData analyzedData;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "food_id")
-    private Food food;
+    @Column(name = "food_name")
+    private String foodName;
 }
