@@ -3,21 +3,26 @@ package pangyo.makeat.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @Slf4j
-@Controller
+@RestController
 @RequestMapping("/record")
 public class RecordController {
-//
-//    @GetMapping("/{kakaoId}/image")
-//    public void
-//
-//    @GetMapping("/save")
-//    public void getRecordSave() {
 
-    }
+//    @GetMapping("/{kakaoId}/image")
+//    public void getRecordImage(@PathVariable String kakaoId) throws IOException {
+//        log.info("mappingPath kakaoId = {}", kakaoId);
+//
+//
+//    }
+
+//    @GetMapping("/save")
+//    public void getRecordSave(@RequestParam) {
+//
+//    }
 
 
 }
