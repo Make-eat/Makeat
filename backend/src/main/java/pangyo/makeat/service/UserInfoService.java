@@ -31,8 +31,8 @@ public class UserInfoService {
     @Transactional
     public void saveUserInfo(String kakaoId, int age, String gender, int height, int weight, float bmi) throws IOException {
         UserInfo userinfo = new UserInfo();
-        log.info("afsj {}", usersRepository.findByKakaoId(kakaoId).get().toString());
         Users user = usersRepository.findByKakaoId(kakaoId).get(); //해당 kakaoId의 user 가져와서
+        log.info("saveUserInfo, User id = {}", usersRepository.findByKakaoId(kakaoId).get().getUserId());
         userinfo.setUserId(user);
         userinfo.setAge(age);
         userinfo.setGender(InfoGender.valueOf(gender));
@@ -44,7 +44,8 @@ public class UserInfoService {
 
     @Transactional
     public Optional<UserInfo> findUserInfo(String kakaoId) {
-        Users user = usersRepository.findById(kakaoId).get();
-        return userInfoRepository.findByUserId(user.getUserId());
+        Users user = usersRepository.findByKakaoId(kakaoId).get();
+        log.info("findUserInfo, user info = {}", userInfoRepository.findByUserId(user));
+        return userInfoRepository.findByUserId(user);
     }
 }
