@@ -84,8 +84,6 @@ public class UsersController {
         us.saveUser(kakaoId);
         us.findAllUsers();
         return "ok";
-
-
     }
 
     /**
