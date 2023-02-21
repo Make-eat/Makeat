@@ -14,7 +14,7 @@ public class Food {
     @Id
     @GeneratedValue
     @Column(name = "food_id")
-    private String foodId;
+    private Long foodId;
 
     @Column(name = "food_name")
     private String foodName;

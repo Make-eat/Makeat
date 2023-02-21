@@ -10,11 +10,12 @@ import lombok.Setter;
 public class Qna {
     @Id @GeneratedValue
     @Column(name="qna_id")
-    private String qnaId;
+    private Long qnaId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private Users userId;
+    // private Users users; 이렇게 바꿔 주세요!
 
     private String context;
 

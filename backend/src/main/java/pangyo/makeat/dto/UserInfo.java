@@ -11,15 +11,22 @@ public class UserInfo {
     @Id
     @GeneratedValue
     @Column(name = "info_id")
-    private String infoId;
+    private Long infoId;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private Users userId;
+    // private Users users; 이렇게 바꿔 주세요!
+
     private int age;
+
     @Enumerated(EnumType.STRING)
     private InfoGender gender; // M, W
+
     private int height;
+
     private int weight;
+
     private float bmi;
 
 }
