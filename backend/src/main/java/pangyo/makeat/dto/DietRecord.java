@@ -14,19 +14,23 @@ public class DietRecord {
     @Id
     @GeneratedValue
     @Column(name = "record_id")
-    private String recordId;
+    private Long recordId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "total_id")
-    private NutrientTotal totalId;
+    private NutrientTotal nutrientTotal;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private Users userId;
+    private Users users;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="nut_id")
-    private Nutrient nutId;
+    private Nutrient nutrient;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "analyzed_data_id")
+    private AnalyzedData analyzedData;
 
     private String date;
 
@@ -35,10 +39,4 @@ public class DietRecord {
     private String updatedAt;
 
     private String comment; // 한줄평
-
-    @Column(name = "img_url")
-    private String imgUrl;
-
-    @Column(name = "analyzed_img_url")
-    private String analyzedImgUrl;
 }

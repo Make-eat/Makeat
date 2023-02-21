@@ -13,7 +13,7 @@ import lombok.Setter;
 public class Nutrient {
     @Id @GeneratedValue
     @Column(name = "nut_id")
-    private String nutId;
+    private Long nutId;
 
     private String tan;
 

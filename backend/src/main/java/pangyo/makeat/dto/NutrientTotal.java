@@ -14,7 +14,7 @@ public class NutrientTotal {
     @Id
     @GeneratedValue
     @Column(name = "total_id")
-    private String totalId;
+    private Long totalId;
 
     @Column(name = "total_tan")
     private String totalTan;
@@ -30,7 +30,5 @@ public class NutrientTotal {
 
     @Column(name = "total_cal")
     private String totalCal;
-
-
 
 }
