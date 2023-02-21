@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pangyo.makeat.dto.DietRecord;
+import pangyo.makeat.dto.Users;
 import pangyo.makeat.repository.DietRecordRepository;
 
 @Service
@@ -13,7 +14,7 @@ public class DietRecordService {
     DietRecordRepository dietRecordRepository;
 
     @Transactional
-    public void saveDietRecord(String date, String createdAt, String updatedAt, String comment) {
+    public void saveDietRecord(Users users, String date, String createdAt, String updatedAt, String comment) {
         DietRecord dietRecord = new DietRecord();
         dietRecord.setDate(date);
         dietRecord.setCreatedAt(createdAt);
