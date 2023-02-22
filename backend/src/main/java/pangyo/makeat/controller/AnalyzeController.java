@@ -35,9 +35,10 @@ public class AnalyzeController {
         foodList.add("닭가슴살");
 
         //AnalyzedData DB에 넣기
-        as.saveData(kakaoId, analyzedData.getImgUrl(), deepAnalyzedData.getAnalyzedImgUrl());
+        AnalyzedData savedAnalyzedDate = as.saveData(kakaoId, analyzedData.getImgUrl(), deepAnalyzedData.getAnalyzedImgUrl());
 
         // return할 json 세팅
+        responseDatas.setAnalyzedDataId(savedAnalyzedDate.getAnalyzedDateId());
         responseDatas.setRecordedFoodList(foodList);
         responseDatas.setImgUrl(analyzedData.getImgUrl());
         responseDatas.setAnalyzedImgUrl(deepAnalyzedData.getAnalyzedImgUrl());

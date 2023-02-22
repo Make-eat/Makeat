@@ -19,4 +19,20 @@ public class AnalyzedFood {
 
     @Column(name = "food_name")
     private String foodName;
+
+    @Column(name = "food_tan")
+    private float foodTan;
+
+    @Column(name = "food_dan")
+    private float foodDan;
+
+    @Column(name = "food_gi")
+    private float foodGi;
+
+    @Column(name = "food_na")
+    private float foodNa;
+
+    @Column(name = "food_cal")
+    private float foodCal;
+
 }
