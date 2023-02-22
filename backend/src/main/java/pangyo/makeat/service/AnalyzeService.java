@@ -20,12 +20,12 @@ public class AnalyzeService {
     UsersRepository usersRepository;
 
     @Transactional
-    public void saveData(String kakaoId,String imgUrl, String analyzedImgUrl){
+    public AnalyzedData saveData(String kakaoId,String imgUrl, String analyzedImgUrl){
         AnalyzedData analyzedData = new AnalyzedData();
         Optional<Users> users = usersRepository.findByKakaoId(kakaoId);
         analyzedData.setImgUrl(imgUrl);
         analyzedData.setUsers(users.get());
         analyzedData.setAnalyzedImgUrl(analyzedImgUrl);
-        analyzeRepository.save(analyzedData);
+        return analyzeRepository.save(analyzedData);
     }
 }
