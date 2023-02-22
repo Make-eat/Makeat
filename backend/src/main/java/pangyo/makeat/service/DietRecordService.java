@@ -3,12 +3,8 @@ package pangyo.makeat.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pangyo.makeat.dto.AnalyzedData;
-import pangyo.makeat.dto.DietRecord;
-import pangyo.makeat.dto.Users;
-import pangyo.makeat.repository.AnalyzeRepository;
-import pangyo.makeat.repository.DietRecordRepository;
-import pangyo.makeat.repository.UsersRepository;
+import pangyo.makeat.dto.*;
+import pangyo.makeat.repository.*;
 
 @Service
 public class DietRecordService {
@@ -22,19 +18,31 @@ public class DietRecordService {
     @Autowired
     AnalyzeRepository analyzeRepository;
 
+    @Autowired
+    NutrientRepository nutrientRepository;
+
+    @Autowired
+    AnalyzedFoodRepository analyzedFoodRepository;
+
+    @Autowired
+    NutrientTotalRepository nutrientTotalRepository;
 
     @Transactional
     public void saveDietRecord(String kakaoId, String date, String createdAt, String updatedAt, String comment, String analyzedDataId) {
         Users users = usersRepository.findByKakaoId(kakaoId).get();
         AnalyzedData analyzedData = analyzeRepository.findById(analyzedDataId).get();
+        AnalyzedFood analyzedFood = analyzedFoodRepository.findById(analyzedDataId).get();
         DietRecord dietRecord = new DietRecord();
 
-        // Date 를 파싱해서 totalId 계산
-
-
-        // analyzedDate 에서 nutId 계산
-
         dietRecord.setUsers(users);
+
+        // analyzedDataId를 이용해 analyzedFood을 찾아서 nutrient 계산
+        dietRecord.setNutrient(claculateNutrient(analyzedFood));
+
+        // date 를 비교해서 NutrientTotal 테이블 조회.
+        // 바로 위에서 저장한 nutrient 테이블을 TotalNutrient 값에 더함.
+        dietRecord.setNutrientTotal(calculateNutrientTotal(date, dietRecord.getNutrient()));
+
         dietRecord.setAnalyzedData(analyzedData);
         dietRecord.setDate(date);
         dietRecord.setCreatedAt(createdAt);
@@ -43,5 +51,45 @@ public class DietRecordService {
 
         dietRecordRepository.save(dietRecord);
     }
+
+    @Transactional
+    public Nutrient claculateNutrient(AnalyzedFood analyzedFood) {
+        Nutrient nutrient = new Nutrient();
+
+        nutrient.setTan(analyzedFood.getFoodTan());
+        nutrient.setDan(analyzedFood.getFoodDan());
+        nutrient.setGi(analyzedFood.getFoodGi());
+        nutrient.setNa(analyzedFood.getFoodNa());
+        nutrient.setCal(analyzedFood.getFoodCal());
+
+        // 여기서 Nutrient 테이블에 값 저장하고 반환.
+        nutrientRepository.save(nutrient);
+
+        return nutrient;
+    }
+
+    @Transactional
+    public NutrientTotal calculateNutrientTotal(String date, Nutrient nutrient) {
+        NutrientTotal nutrientTotal = nutrientTotalRepository.findByDate(date).get();
+
+        if (nutrientTotal == null) {    // 테이블이 없는 경우
+            nutrientTotal = new NutrientTotal();
+            nutrientTotal.setTotalTan(nutrient.getTan());
+            nutrientTotal.setTotalDan(nutrient.getDan());
+            nutrientTotal.setTotalGi(nutrient.getGi());
+            nutrientTotal.setTotalNa(nutrient.getNa());
+            nutrientTotal.setTotalCal(nutrient.getCal());
+        }else{  // 테이블이 있는 경우
+            nutrientTotal.setTotalTan(nutrient.getTan() + nutrientTotal.getTotalTan());
+            nutrientTotal.setTotalDan(nutrient.getDan() + nutrientTotal.getTotalDan());
+            nutrientTotal.setTotalGi(nutrient.getGi() + nutrientTotal.getTotalGi());
+            nutrientTotal.setTotalNa(nutrient.getNa() + nutrientTotal.getTotalNa());
+            nutrientTotal.setTotalCal(nutrient.getCal() + nutrientTotal.getTotalCal());
+        }
+
+        nutrientTotalRepository.save(nutrientTotal);
+        return nutrientTotal;
+    }
+
 
 }

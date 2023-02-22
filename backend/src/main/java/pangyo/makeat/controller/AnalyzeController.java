@@ -27,7 +27,7 @@ public class AnalyzeController {
         AnalyzedData deepAnalyzedData = new AnalyzedData();
         deepAnalyzedData.setAnalyzedImgUrl("http://analyzedImg.url");
 
-        //딥러닝서버에서 food_name 받아와서 세팅
+        //딥러닝서버에서 food_name 받아와서 세팅, 각 음식의 탄단지나칼로리 추가로 받아주세요
         AnalyzedFood deepAnalyzedFood = new AnalyzedFood();
         deepAnalyzedFood.setFoodName("고구마");
         List<String> foodList = new ArrayList<>();

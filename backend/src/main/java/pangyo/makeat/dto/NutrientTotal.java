@@ -17,18 +17,20 @@ public class NutrientTotal {
     private Long totalId;
 
     @Column(name = "total_tan")
-    private String totalTan;
+    private float totalTan;
 
     @Column(name = "total_Dan")
-    private String totalDan;
+    private float totalDan;
 
     @Column(name = "total_Gi")
-    private String totalGi;
+    private float totalGi;
 
     @Column(name = "total_Na")
-    private String totalNa;
+    private float totalNa;
 
     @Column(name = "total_cal")
-    private String totalCal;
+    private float totalCal;
+
+    private String date;
 
 }
