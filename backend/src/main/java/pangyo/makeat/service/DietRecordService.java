@@ -49,6 +49,7 @@ public class DietRecordService {
 
         dietRecord.setAnalyzedData(analyzedData);
         dietRecord.setDate(date);
+        dietRecord.setYearMonth(date.substring(0, 6));
         dietRecord.setCreatedAt(createdAt);
         dietRecord.setUpdatedAt(updatedAt);
         dietRecord.setComment(comment);
@@ -121,6 +122,8 @@ public class DietRecordService {
             nutrientTotal.setTotalNa(nutrient.getNa());
             nutrientTotal.setTotalCal(nutrient.getCal());
             nutrientTotal.setUsers(users);
+            nutrientTotal.setDate(date);
+            nutrientTotal.setYearMonth(date.substring(0,6));
         }else{  // 테이블이 있는 경우
             nutrientTotal.setTotalTan(nutrient.getTan() + nutrientTotal.getTotalTan());
             nutrientTotal.setTotalDan(nutrient.getDan() + nutrientTotal.getTotalDan());
