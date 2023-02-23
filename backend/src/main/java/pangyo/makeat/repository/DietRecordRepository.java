@@ -10,6 +10,5 @@ import java.util.Optional;
 
 @Repository
 public interface DietRecordRepository extends JpaRepository<DietRecord, String> {
-    Optional<DietRecord> findDietRecordByUserId(Long userId);
     List<DietRecord> findAllByUsersAndYearMonth(Users users, String yearMonth);
 }
