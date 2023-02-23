@@ -4,7 +4,7 @@ import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pangyo.makeat.domain.ResponseDietRecord;
+import pangyo.makeat.responses.ResponseDietRecord;
 import pangyo.makeat.dto.*;
 import pangyo.makeat.repository.*;
 
@@ -57,29 +57,25 @@ public class DietRecordService {
         dietRecordRepository.save(dietRecord);
     }
 
+    /**
+     * 개별 record 수정. 이미지는 변경 불가. 날짜와 comment만 수정 가능.
+     * @param recordId
+     * @param date
+     * @param createdAt
+     * @param updatedAt
+     * @param comment
+     * @param analyzedDataId
+     */
     @Transactional
     public void putDietRecord(String recordId, String date, String createdAt, String updatedAt, String comment, String analyzedDataId) {
-//        DietRecord dietRecord = dietRecordRepository.findById(recordId).get();
-//        AnalyzedData analyzedData = analyzeRepository.findById(analyzedDataId).get();
-//        AnalyzedFood analyzedFood = analyzedFoodRepository.findById(analyzedDataId).get();
-//        DietRecord dietRecord = new DietRecord();
-//
-//        dietRecord.setUsers(users);
-//
-//        // analyzedDataId를 이용해 analyzedFood을 찾아서 nutrient 계산
-//        dietRecord.setNutrient(claculateNutrient(analyzedFood));
-//
-//        // date 를 비교해서 NutrientTotal 테이블 조회.
-//        // 바로 위에서 저장한 nutrient 테이블을 TotalNutrient 값에 더함.
-//        dietRecord.setNutrientTotal(calculateNutrientTotal(date, dietRecord.getNutrient()));
-//
-//        dietRecord.setAnalyzedData(analyzedData);
-//        dietRecord.setDate(date);
-//        dietRecord.setCreatedAt(createdAt);
-//        dietRecord.setUpdatedAt(updatedAt);
-//        dietRecord.setComment(comment);
-//
-//        dietRecordRepository.save(dietRecord);
+        DietRecord dietRecord = dietRecordRepository.findById(recordId).get();
+
+        dietRecord.setDate(date);
+        dietRecord.setCreatedAt(createdAt);
+        dietRecord.setUpdatedAt(updatedAt);
+        dietRecord.setComment(comment);
+
+        dietRecordRepository.save(dietRecord);
     }
 
     /**
@@ -141,9 +137,35 @@ public class DietRecordService {
      * 개별 Record 기록 삭제
      * @param recordId
      */
+    @Transactional
     public void deleteDietRecord(Long recordId) {
         DietRecord dietRecord = dietRecordRepository.findById(String.valueOf(recordId)).get();
+        Nutrient nutrient = dietRecord.getNutrient();
+
+        // NutrientTotal 에서 값 계산
+        subNutrientTotal(dietRecord.getDate(), nutrient);
+
         dietRecordRepository.delete(dietRecord);
+        nutrientRepository.delete(nutrient);
+    }
+
+    /**
+     * 값 계산
+     * @param date
+     * @param nutrient
+     * @return
+     */
+    @Transactional
+    public void subNutrientTotal(String date, Nutrient nutrient) {
+        NutrientTotal nutrientTotal = nutrientTotalRepository.findNutrientTotalByDate(date);
+
+        nutrientTotal.setTotalTan(nutrientTotal.getTotalTan() - nutrient.getTan());
+        nutrientTotal.setTotalDan(nutrientTotal.getTotalDan() - nutrient.getDan());
+        nutrientTotal.setTotalGi(nutrientTotal.getTotalGi() - nutrient.getGi());
+        nutrientTotal.setTotalNa(nutrientTotal.getTotalNa() - nutrient.getNa());
+        nutrientTotal.setTotalCal(nutrientTotal.getTotalCal() - nutrient.getCal());
+
+        nutrientTotalRepository.save(nutrientTotal);
     }
 
     /**

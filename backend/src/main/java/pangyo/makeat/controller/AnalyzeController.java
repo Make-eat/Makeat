@@ -3,7 +3,7 @@ package pangyo.makeat.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pangyo.makeat.domain.ResponseDatas;
+import pangyo.makeat.responses.ResponseDatas;
 import pangyo.makeat.dto.AnalyzedData;
 import pangyo.makeat.dto.AnalyzedFood;
 import pangyo.makeat.service.AnalyzeService;
