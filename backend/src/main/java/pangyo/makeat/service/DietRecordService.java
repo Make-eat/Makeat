@@ -81,7 +81,11 @@ public class DietRecordService {
 //        dietRecordRepository.save(dietRecord);
     }
 
-
+    /**
+     * 영양분 계산하여 Nutrient 테이블에 저장
+     * @param analyzedFood
+     * @return
+     */
     @Transactional
     public Nutrient claculateNutrient(AnalyzedFood analyzedFood) {
         Nutrient nutrient = new Nutrient();
@@ -130,13 +134,44 @@ public class DietRecordService {
         return nutrientTotal;
     }
 
+    /**
+     * 개별 Record 기록 삭제
+     * @param recordId
+     */
     public void deleteDietRecord(Long recordId) {
         DietRecord dietRecord = dietRecordRepository.findById(String.valueOf(recordId)).get();
         dietRecordRepository.delete(dietRecord);
     }
 
-//    public List<ResponseDietRecord> getDietRecordList(String kakaoId, String date) {
-//        List<ResponseDietRecord> responseDietRecordList = new JSONArray();
-//
-//    }
+    /**
+     * 월별 record 기록 요청
+     * @param kakaoId
+     * @param yearMonth
+     * @return
+     */
+    public List<ResponseDietRecord> getDietRecordList(String kakaoId, String yearMonth) {
+        List<ResponseDietRecord> responseDietRecordList = new JSONArray();
+
+        Users users = usersRepository.findByKakaoId(kakaoId).get();
+        List<DietRecord> dietRecordList = dietRecordRepository.findAllByUsersAndYearMonth(users, yearMonth);
+
+        dietRecordList.stream().map(record ->{
+            ResponseDietRecord responseDietRecord = new ResponseDietRecord();
+            AnalyzedData analyzedData = record.getAnalyzedData();
+
+            responseDietRecord.setRecordId(record.getRecordId());
+            responseDietRecord.setDate(record.getDate());
+            responseDietRecord.setCreatedAt(record.getCreatedAt());
+            responseDietRecord.setUpdatedAt(record.getUpdatedAt());
+            responseDietRecord.setComment(record.getComment());
+            responseDietRecord.setImgUrl(analyzedData.getImgUrl());
+            responseDietRecord.setImgUrl(analyzedData.getAnalyzedImgUrl());
+            responseDietRecord.setNutrient(record.getNutrient());
+
+            responseDietRecordList.add(responseDietRecord);
+            return null;
+        });
+
+        return responseDietRecordList;
+    }
 }

@@ -2,6 +2,7 @@ package pangyo.makeat.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import pangyo.makeat.dto.Nutrient;
 
 @Getter
 @Setter
@@ -20,13 +21,5 @@ public class ResponseDietRecord {
 
     private String analyzedImgUrl;
 
-    private float tan;
-
-    private float dan;
-
-    private float zi;
-
-    private float na;
-
-    private float cal;
+    private Nutrient nutrient;
 }

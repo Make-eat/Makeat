@@ -29,16 +29,8 @@ public class NutrientTotalService {
 
     public List<NutrientTotal> getNutrientTotalList(String kakaoId, String yearMonth) {
         Users users = usersRepository.findByKakaoId(kakaoId).get();
-        List<NutrientTotal> nutrientTotalList = nutrientTotalRepository.findAllByUsers(users);
-        List<NutrientTotal> response = new JSONArray();
+        List<NutrientTotal> nutrientTotalList = nutrientTotalRepository.findAllByUsersAndYearMonth(users, yearMonth);
 
-        nutrientTotalList.stream().map(nutrientTotal -> {
-            if (nutrientTotal.getDate().substring(0, 6) == yearMonth) {
-                response.add(nutrientTotal);
-            }
-            return null;
-        });
-
-        return response;
+        return nutrientTotalList;
     }
 }

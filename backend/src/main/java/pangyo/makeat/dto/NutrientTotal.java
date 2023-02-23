@@ -30,6 +30,9 @@ public class NutrientTotal {
 
     private String date;
 
+    @Column(name="year_month")
+    private String yearMonth;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private Users users;

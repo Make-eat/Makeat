@@ -9,5 +9,5 @@ import java.util.Optional;
 
 public interface NutrientTotalRepository extends JpaRepository<NutrientTotal, String> {
     NutrientTotal findNutrientTotalByDate(String date);
-    List<NutrientTotal> findAllByUsers(Users users);
+    List<NutrientTotal> findAllByUsersAndYearMonth(Users users, String yearMonth);
 }

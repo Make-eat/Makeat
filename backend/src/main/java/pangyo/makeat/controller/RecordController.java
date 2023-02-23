@@ -37,9 +37,9 @@ public class RecordController {
     @GetMapping("/{kakaoId}")
     public List<ResponseDietRecord> getRecordList(
             @PathVariable String kakaoId,
-            @RequestParam("date") String date
+            @RequestParam("yearMonth") String yearMonth
     ) {
-        return dietRecordService.getDietRecordList(kakaoId, date);
+        return dietRecordService.getDietRecordList(kakaoId, yearMonth);
     }
 
     /**
