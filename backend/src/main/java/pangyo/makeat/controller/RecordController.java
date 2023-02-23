@@ -3,6 +3,7 @@ package pangyo.makeat.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import pangyo.makeat.requests.RequestRecord;
 import pangyo.makeat.responses.ResponseDietRecord;
 import pangyo.makeat.service.DietRecordService;
 import java.util.List;
@@ -21,14 +22,15 @@ public class RecordController {
     @PostMapping("/save/{kakaoId}")
     public void saveRecord(
             @PathVariable String kakaoId,
-            @RequestParam("date") String date,
-            @RequestParam("createdAt") String createdAt,
-            @RequestParam("updatedAt") String updatedAt,
-            @RequestParam("comment") String comment,
-            @RequestParam("analyzedDataId") String analyzedDataId
+            @RequestBody RequestRecord requestRecord
             ) {
+        String date = requestRecord.getDate();
+        String createdAt = requestRecord.getCreatedAt();
+        String updatedAt = requestRecord.getUpdatedAt();
+        String comment = requestRecord.getComment();
+        Long analyzedDataId = requestRecord.getAnalyzedDataId();
 
-        dietRecordService.saveDietRecord(kakaoId, date, createdAt, updatedAt, comment, analyzedDataId);
+        dietRecordService.saveDietRecord(kakaoId, date, createdAt, updatedAt, comment, String.valueOf(analyzedDataId));
     }
 
     /**
@@ -48,13 +50,15 @@ public class RecordController {
     @PutMapping("/{recordId}")
     public void putRecord(
             @PathVariable String recordId,
-            @RequestParam("date") String date,
-            @RequestParam("createdAt") String createdAt,
-            @RequestParam("updatedAt") String updatedAt,
-            @RequestParam("comment") String comment,
-            @RequestParam("analyzedDataId") String analyzedDataId
+            @RequestBody RequestRecord requestRecord
     ) {
-        dietRecordService.putDietRecord(recordId, date, createdAt, updatedAt, comment, analyzedDataId);
+        String date = requestRecord.getDate();
+        String createdAt = requestRecord.getCreatedAt();
+        String updatedAt = requestRecord.getUpdatedAt();
+        String comment = requestRecord.getComment();
+        Long analyzedDataId = requestRecord.getAnalyzedDataId();
+
+        dietRecordService.putDietRecord(recordId, date, createdAt, updatedAt, comment, String.valueOf(analyzedDataId));
     }
 
     /**
