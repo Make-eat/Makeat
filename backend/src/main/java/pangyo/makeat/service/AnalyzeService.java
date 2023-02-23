@@ -22,7 +22,7 @@ public class AnalyzeService {
     @Transactional
     public AnalyzedData saveData(String kakaoId,String imgUrl, String analyzedImgUrl){
         AnalyzedData analyzedData = new AnalyzedData();
-        Optional<Users> users = usersRepository.findByKakaoId(kakaoId);
+        Optional<Users> users = usersRepository.findUsersByKakaoId(kakaoId);
         analyzedData.setImgUrl(imgUrl);
         analyzedData.setUsers(users.get());
         analyzedData.setAnalyzedImgUrl(analyzedImgUrl);

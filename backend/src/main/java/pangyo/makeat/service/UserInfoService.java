@@ -24,28 +24,29 @@ public class UserInfoService {
     @Autowired
     UsersRepository usersRepository;
 
-    public Users findUsers(String kakaoId) throws IOException {
-        return usersRepository.findById(kakaoId).get();
-    }
+//    public Users findUsers(String kakaoId) throws IOException {
+//        return usersRepository.findUsersByKakaoId(kakaoId).get();
+//    }
 
     @Transactional
     public void saveUserInfo(String kakaoId, int age, String gender, int height, int weight, float bmi) throws IOException {
         UserInfo userinfo = new UserInfo();
-        Users user = usersRepository.findByKakaoId(kakaoId).get(); //해당 kakaoId의 user 가져와서
-        log.info("saveUserInfo, User id = {}", usersRepository.findByKakaoId(kakaoId).get().getUserId());
-        userinfo.setUserId(user);
+        Users users = usersRepository.findUsersByKakaoId(kakaoId).get(); //해당 kakaoId의 user 가져와서
+        userinfo.setUserId(users);
         userinfo.setAge(age);
         userinfo.setGender(InfoGender.valueOf(gender));
         userinfo.setHeight(height);
         userinfo.setWeight(weight);
         userinfo.setBmi(bmi);
+
         userInfoRepository.save(userinfo);
     }
 
     @Transactional
     public Optional<UserInfo> findUserInfo(String kakaoId) {
-        Users user = usersRepository.findByKakaoId(kakaoId).get();
+        Users user = usersRepository.findUsersByKakaoId(kakaoId).get();
         log.info("findUserInfo, user info = {}", userInfoRepository.findByUserId(user));
+
         return userInfoRepository.findByUserId(user);
     }
 }
