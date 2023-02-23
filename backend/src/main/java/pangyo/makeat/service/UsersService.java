@@ -31,12 +31,12 @@ public class UsersService {
     }
 
     public Optional<Users> findUsers(String kakaoId) {
-        Optional<Users> users = usersRepository.findByKakaoId(kakaoId);
+        Optional<Users> users = usersRepository.findUsersByKakaoId(kakaoId);
         return users;
     }
 
     public boolean checkExistUsers(String kakaoId) {
-        Optional<Users> users = usersRepository.findByKakaoId(kakaoId);
+        Optional<Users> users = usersRepository.findUsersByKakaoId(kakaoId);
         if (users.isPresent()) { //이미 가입된 사용자
             return true;
         }

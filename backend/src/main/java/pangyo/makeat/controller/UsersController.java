@@ -45,6 +45,8 @@ public class UsersController {
         int weight = userInfo.getWeight();
         float bmi = userInfo.getBmi();
 
+        System.out.println(bmi);
+
         uis.saveUserInfo(kakaoId, age, gender, height, weight, bmi);
     }
 

@@ -33,7 +33,7 @@ public class DietRecordService {
 
     @Transactional
     public void saveDietRecord(String kakaoId, String date, String createdAt, String updatedAt, String comment, String analyzedDataId) {
-        Users users = usersRepository.findByKakaoId(kakaoId).get();
+        Users users = usersRepository.findUsersByKakaoId(kakaoId).get();
         AnalyzedData analyzedData = analyzeRepository.findById(analyzedDataId).get();
         AnalyzedFood analyzedFood = analyzedFoodRepository.findById(analyzedDataId).get();
         DietRecord dietRecord = new DietRecord();
@@ -177,7 +177,7 @@ public class DietRecordService {
     public List<ResponseDietRecord> getDietRecordList(String kakaoId, String yearMonth) {
         List<ResponseDietRecord> responseDietRecordList = new JSONArray();
 
-        Users users = usersRepository.findByKakaoId(kakaoId).get();
+        Users users = usersRepository.findUsersByKakaoId(kakaoId).get();
         List<DietRecord> dietRecordList = dietRecordRepository.findAllByUsersAndYearMonth(users, yearMonth);
 
         dietRecordList.stream().map(record ->{

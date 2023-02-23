@@ -28,7 +28,7 @@ public class NutrientTotalService {
     DietRecordRepository dietRecordRepository;
 
     public List<NutrientTotal> getNutrientTotalList(String kakaoId, String yearMonth) {
-        Users users = usersRepository.findByKakaoId(kakaoId).get();
+        Users users = usersRepository.findUsersByKakaoId(kakaoId).get();
         List<NutrientTotal> nutrientTotalList = nutrientTotalRepository.findAllByUsersAndYearMonth(users, yearMonth);
 
         return nutrientTotalList;
