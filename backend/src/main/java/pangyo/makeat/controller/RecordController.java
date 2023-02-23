@@ -1,21 +1,11 @@
 package pangyo.makeat.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pangyo.makeat.dto.AnalyzedData;
-import pangyo.makeat.dto.DietRecord;
-import pangyo.makeat.dto.Users;
-import pangyo.makeat.repository.AnalyzeRepository;
-import pangyo.makeat.repository.UserInfoRepository;
-import pangyo.makeat.repository.UsersRepository;
+import pangyo.makeat.domain.ResponseDietRecord;
 import pangyo.makeat.service.DietRecordService;
-import pangyo.makeat.service.UsersService;
-
-import javax.swing.text.html.Option;
-import java.io.IOException;
-import java.util.Optional;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -28,9 +18,9 @@ public class RecordController {
     /**
      * 식단 기록 저장
      */
-    @PostMapping("/save")
-    public void getRecordSave(
-            @RequestParam("kakaoId") String kakaoId,
+    @PostMapping("/save/{kakaoId}")
+    public void saveRecord(
+            @PathVariable String kakaoId,
             @RequestParam("date") String date,
             @RequestParam("createdAt") String createdAt,
             @RequestParam("updatedAt") String updatedAt,
@@ -38,9 +28,40 @@ public class RecordController {
             @RequestParam("analyzedDataId") String analyzedDataId
             ) {
 
-
-
         dietRecordService.saveDietRecord(kakaoId, date, createdAt, updatedAt, comment, analyzedDataId);
+    }
 
+    /**
+     * 월별 record 기록 요청
+     */
+    @GetMapping("/{kakaoId}")
+    public List<ResponseDietRecord> getRecordList(
+            @PathVariable String kakaoId,
+            @RequestParam("yearMonth") String yearMonth
+    ) {
+        return dietRecordService.getDietRecordList(kakaoId, yearMonth);
+    }
+
+    /**
+     * 개별 record 기록 수정
+     */
+    @PutMapping("/{recordId}")
+    public void putRecord(
+            @PathVariable String recordId,
+            @RequestParam("date") String date,
+            @RequestParam("createdAt") String createdAt,
+            @RequestParam("updatedAt") String updatedAt,
+            @RequestParam("comment") String comment,
+            @RequestParam("analyzedDataId") String analyzedDataId
+    ) {
+        dietRecordService.putDietRecord(recordId, date, createdAt, updatedAt, comment, analyzedDataId);
+    }
+
+    /**
+     * 개별 record 기록 삭제
+     */
+    @DeleteMapping("/{recordId}")
+    public void deleteRecord(@PathVariable Long recordId) {
+        dietRecordService.deleteDietRecord(recordId);
     }
 }

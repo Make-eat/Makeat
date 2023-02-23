@@ -15,13 +15,13 @@ public class Nutrient {
     @Column(name = "nut_id")
     private Long nutId;
 
-    private String tan;
+    private float tan;
 
-    private String dan;
+    private float dan;
 
-    private String gi;
+    private float gi;
 
-    private String na;
+    private float na;
 
-    private String cal;
+    private float cal;
 }

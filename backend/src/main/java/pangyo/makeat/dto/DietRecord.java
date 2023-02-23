@@ -34,6 +34,9 @@ public class DietRecord {
 
     private String date;
 
+    @Column(name="year_month")
+    private String yearMonth;
+
     private String createdAt;
 
     private String updatedAt;
