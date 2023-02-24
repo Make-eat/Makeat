@@ -18,14 +18,9 @@ import java.io.IOException;
 @RestController
 public class NutrientController {
 
-    @GetMapping("/api")
+    @GetMapping("/nutrient")
     public static void getApi(String[] args) throws IOException, ParseException {
-        StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1471000/FoodNtrIrdntInfoService1/getFoodNtrItdntList1"); /*URL*/
-        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=zGlMo2YhDISGj2h%2B0JLPZyx2KZubBibtKxCdeMSXdQVbWSsv%2BXHmPbZs0uZOUulYXNn4V20sDH4V3RKoxxezwg%3D%3D"); /*Service Key*/
-        urlBuilder.append("&" + URLEncoder.encode("desc_kor","UTF-8") + "=" + URLEncoder.encode("닭가슴살", "UTF-8")); /*식품이름*/
-//      urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
-//      urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("3", "UTF-8")); /*한 페이지 결과 수*/
-        urlBuilder.append("&" + URLEncoder.encode("type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*응답데이터 형식(xml/json) Default: xml*/
+        StringBuilder urlBuilder = new StringBuilder("http://127.0.0.1:5000"); /*URL*/
         URL url = new URL(urlBuilder.toString());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
@@ -50,13 +45,11 @@ public class NutrientController {
         String info = sb.toString();
         JSONParser parser = new JSONParser();
         JSONObject jsonObject = (JSONObject) parser.parse(info);
-        JSONObject body = (JSONObject)jsonObject.get("body");
+        JSONArray foodlist = (JSONArray)jsonObject.get("foodlist");
 
-        JSONArray items = (JSONArray)body.get("items");
-
-        for(int i = 0; i < items.size(); i++)
+        for(int i = 0; i < foodlist.size(); i++)
         {
-            String items_name = "";
+            String food_name = "";
             String once = "";
             String tan = "";
             String dan = "";
@@ -64,16 +57,16 @@ public class NutrientController {
             String na = "";
             String cal = "";
 
-            JSONObject items_info = (JSONObject)items.get(i);
-            items_name += items_info.get("DESC_KOR") + " ";
-            once += items_info.get("SERVING_WT") + " ";
-            tan += items_info.get("NUTR_CONT2") + " ";
-            dan += items_info.get("NUTR_CONT3") + " ";
-            zi += items_info.get("NUTR_CONT4") + " ";
-            na += items_info.get("NUTR_CONT6") + " ";
-            cal += items_info.get("NUTR_CONT1") + " ";
+            JSONObject food_info = (JSONObject)foodlist.get(i);
+            food_name += food_info.get("name") + " ";
+            once += food_info.get("quan") + " ";
+            tan += food_info.get("carb") + " ";
+            dan += food_info.get("protein") + " ";
+            zi += food_info.get("fat") + " ";
+            na += food_info.get("na") + " ";
+            cal += food_info.get("kcal") + " ";
 
-            System.out.println("식품 이름: " + items_name);
+            System.out.println("식품 이름: " + food_name);
             System.out.println("1회 제공량: " + once);
             System.out.println("탄수화물: " + tan);
             System.out.println("단백질: " + dan);
