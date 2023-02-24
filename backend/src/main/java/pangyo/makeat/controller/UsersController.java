@@ -1,5 +1,7 @@
 package pangyo.makeat.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -33,21 +35,23 @@ public class UsersController {
         return userInfo.get(); //user info json 보내기
     }
 
+    @PostMapping("/abc")
+    public void abc(HttpServletRequest request, HttpServletResponse response){
+        log.info(request.getParameter("bmi"));
+    }
+
     //회원 정보 수정 란에서 최초 회원 정보 저장
     //getParameter()는 GET의 쿼리파라미터, POST Form 파라미터 모두 꺼낼 수 있음
     @PostMapping("/info/{kakaoId}")
-    public void postUserInfo(
-            @PathVariable String kakaoId, @RequestBody UserInfo userInfo
-    ) throws IOException {
+    public void postUserInfo(@PathVariable String kakaoId, @RequestBody UserInfo userInfo) throws IOException {
         int age = userInfo.getAge();
         String gender = String.valueOf(userInfo.getGender());
         int height = userInfo.getHeight();
         int weight = userInfo.getWeight();
         float bmi = userInfo.getBmi();
 
-        System.out.println(bmi);
-
         uis.saveUserInfo(kakaoId, age, gender, height, weight, bmi);
+        log.info("{} {} {} {} {} {}", kakaoId, age, gender, height, weight, bmi);
     }
 
     //회원 정보 수정
@@ -58,7 +62,9 @@ public class UsersController {
         int height = userInfo.getHeight();
         int weight = userInfo.getWeight();
         float bmi = userInfo.getBmi();
+
         uis.saveUserInfo(kakaoId, age, gender, height, weight, bmi);
+        log.info("{} {} {} {} {} {}", kakaoId, age, gender, height, weight, bmi);
     }
 
     //회원 탈퇴
@@ -76,6 +82,16 @@ public class UsersController {
     @GetMapping("/login/{kakaoId}")
     public boolean loginPage(@PathVariable String kakaoId){
         return us.checkExistUsers(kakaoId);
+    }
+
+    /**
+     * Register
+     */
+    @PostMapping("/register/{kakaoId}")
+    public String makeUser(@PathVariable String kakaoId) throws IOException {
+        us.saveUser(kakaoId);
+        us.findAllUsers();
+        return "ok";
     }
 
     /**
