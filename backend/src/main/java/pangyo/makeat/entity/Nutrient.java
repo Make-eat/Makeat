@@ -1,4 +1,4 @@
-package pangyo.makeat.dto;
+package pangyo.makeat.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,13 +15,13 @@ public class Nutrient {
     @Column(name = "nut_id")
     private Long nutId;
 
-    private float tan;
+    private float carbohydrate;
 
-    private float dan;
+    private float protein;
 
-    private float gi;
+    private float fat;
 
     private float na;
 
-    private float cal;
+    private float kcal;
 }

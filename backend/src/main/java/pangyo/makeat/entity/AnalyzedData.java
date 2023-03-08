@@ -1,4 +1,4 @@
-package pangyo.makeat.dto;
+package pangyo.makeat.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -15,7 +15,7 @@ public class AnalyzedData {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private Users users;
+    private User user;
 
     @Column(name = "img_url")
     private String imgUrl;

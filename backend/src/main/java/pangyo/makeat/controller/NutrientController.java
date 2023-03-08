@@ -72,7 +72,7 @@ public class NutrientController {
             System.out.println("단백질: " + dan);
             System.out.println("지방: " + zi);
             System.out.println("나트륨: " + na);
-            System.out.println("칼로리: " + cal);
+            System.out.println("칼로리 : " + cal);
             System.out.println("");
         }
     }

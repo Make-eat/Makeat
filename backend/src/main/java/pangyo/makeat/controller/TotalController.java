@@ -3,8 +3,7 @@ package pangyo.makeat.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pangyo.makeat.dto.NutrientTotal;
-import pangyo.makeat.repository.DietRecordRepository;
+import pangyo.makeat.entity.NutrientTotal;
 import pangyo.makeat.service.NutrientTotalService;
 
 import java.util.List;

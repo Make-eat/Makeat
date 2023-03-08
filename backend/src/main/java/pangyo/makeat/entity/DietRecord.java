@@ -1,11 +1,8 @@
-package pangyo.makeat.dto;
+package pangyo.makeat.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @Entity
 @Setter
@@ -22,7 +19,7 @@ public class DietRecord {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private Users users;
+    private User user;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="nut_id")
@@ -33,6 +30,8 @@ public class DietRecord {
     private AnalyzedData analyzedData;
 
     private String date;
+
+    private String time;
 
     @Column(name="year_month")
     private String yearMonth;

@@ -1,4 +1,4 @@
-package pangyo.makeat.dto;
+package pangyo.makeat.entity;
 
 public enum InfoGender {
     M,

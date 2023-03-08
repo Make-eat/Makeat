@@ -5,14 +5,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RequestRecord {
+public class PutRecord {
     private String date;
 
-    private String createdAt;
-
-    private String updatedAt;
+    private String time;
 
     private String comment;
-
-    private Long analyzedDataId;
 }

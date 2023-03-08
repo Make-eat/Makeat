@@ -1,4 +1,4 @@
-package pangyo.makeat.dto;
+package pangyo.makeat.entity;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,7 @@ import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
-public class UsersRepositoryTest {
+public class UserRepositoryTest {
     @Autowired
     UsersRepository usersRepository;
 
@@ -22,7 +22,7 @@ public class UsersRepositoryTest {
     @Test
     public void saveAndReadPosts() {
         //given
-        Users user = new Users();
+        User user = new User();
 
         String kakaoId = "abc";
 
@@ -30,7 +30,7 @@ public class UsersRepositoryTest {
 
         usersRepository.save(user);
 
-        Users user2 = new Users();
+        User user2 = new User();
 
         String kakaoId2 = "def";
 
@@ -39,10 +39,10 @@ public class UsersRepositoryTest {
         usersRepository.save(user2);
 
         //when
-        List<Users> usersList = usersRepository.findAll();
+        List<User> userList = usersRepository.findAll();
 
         //then
-        Users users = usersList.get(1);
+        User users = userList.get(1);
         assertThat(users.getUserId()).isEqualTo(2);
         System.out.println(users.getUserId());
     }

@@ -1,14 +1,12 @@
 package pangyo.makeat.service;
 
 import jakarta.transaction.Transactional;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pangyo.makeat.dto.InfoGender;
-import pangyo.makeat.dto.UserInfo;
-import pangyo.makeat.dto.Users;
+import pangyo.makeat.entity.InfoGender;
+import pangyo.makeat.entity.User;
+import pangyo.makeat.entity.UserInfo;
 import pangyo.makeat.repository.UserInfoRepository;
 import pangyo.makeat.repository.UsersRepository;
 
@@ -31,8 +29,8 @@ public class UserInfoService {
     @Transactional
     public void saveUserInfo(String kakaoId, int age, String gender, int height, int weight, float bmi) throws IOException {
         UserInfo userinfo = new UserInfo();
-        Users users = usersRepository.findUsersByKakaoId(kakaoId).get(); //해당 kakaoId의 user 가져와서
-        userinfo.setUserId(users);
+        User user = usersRepository.findUsersByKakaoId(kakaoId).get(); //해당 kakaoId의 user 가져와서
+        userinfo.setUserId(user);
         userinfo.setAge(age);
         userinfo.setGender(InfoGender.valueOf(gender));
         userinfo.setHeight(height);
@@ -44,7 +42,7 @@ public class UserInfoService {
 
     @Transactional
     public Optional<UserInfo> findUserInfo(String kakaoId) {
-        Users user = usersRepository.findUsersByKakaoId(kakaoId).get();
+        User user = usersRepository.findUsersByKakaoId(kakaoId).get();
         log.info("findUserInfo, user info = {}", userInfoRepository.findByUserId(user));
 
         return userInfoRepository.findByUserId(user);

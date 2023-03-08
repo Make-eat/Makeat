@@ -1,4 +1,4 @@
-package pangyo.makeat.dto;
+package pangyo.makeat.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -13,20 +13,20 @@ public class NutrientTotal {
     @Column(name = "total_id")
     private Long totalId;
 
-    @Column(name = "total_tan")
-    private float totalTan;
+    @Column(name = "total_carbohydrate")
+    private float totalCarbohydrate;
 
-    @Column(name = "total_Dan")
-    private float totalDan;
+    @Column(name = "total_protein")
+    private float totalProtein;
 
-    @Column(name = "total_Gi")
-    private float totalGi;
+    @Column(name = "total_fat")
+    private float totalFat;
 
     @Column(name = "total_Na")
     private float totalNa;
 
-    @Column(name = "total_cal")
-    private float totalCal;
+    @Column(name = "total_kcal")
+    private float totalKcal;
 
     private String date;
 
@@ -35,6 +35,6 @@ public class NutrientTotal {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
-    private Users users;
+    private User user;
 
 }
