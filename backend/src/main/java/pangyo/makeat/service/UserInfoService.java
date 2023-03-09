@@ -8,7 +8,7 @@ import pangyo.makeat.entity.InfoGender;
 import pangyo.makeat.entity.User;
 import pangyo.makeat.entity.UserInfo;
 import pangyo.makeat.repository.UserInfoRepository;
-import pangyo.makeat.repository.UsersRepository;
+import pangyo.makeat.repository.UserRepository;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -20,7 +20,7 @@ public class UserInfoService {
     UserInfoRepository userInfoRepository;
 
     @Autowired
-    UsersRepository usersRepository;
+    UserRepository userRepository;
 
 //    public Users findUsers(String kakaoId) throws IOException {
 //        return usersRepository.findUsersByKakaoId(kakaoId).get();
@@ -29,7 +29,7 @@ public class UserInfoService {
     @Transactional
     public void saveUserInfo(String kakaoId, int age, String gender, int height, int weight, float bmi) throws IOException {
         UserInfo userinfo = new UserInfo();
-        User user = usersRepository.findUsersByKakaoId(kakaoId).get(); //해당 kakaoId의 user 가져와서
+        User user = userRepository.findUserByKakaoId(kakaoId).get(); //해당 kakaoId의 user 가져와서
         userinfo.setUserId(user);
         userinfo.setAge(age);
         userinfo.setGender(InfoGender.valueOf(gender));
@@ -42,7 +42,7 @@ public class UserInfoService {
 
     @Transactional
     public Optional<UserInfo> findUserInfo(String kakaoId) {
-        User user = usersRepository.findUsersByKakaoId(kakaoId).get();
+        User user = userRepository.findUserByKakaoId(kakaoId).get();
         log.info("findUserInfo, user info = {}", userInfoRepository.findByUserId(user));
 
         return userInfoRepository.findByUserId(user);

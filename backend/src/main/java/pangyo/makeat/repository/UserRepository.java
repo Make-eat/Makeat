@@ -7,6 +7,6 @@ import pangyo.makeat.entity.User;
 import java.util.Optional;
 
 @Repository
-public interface UsersRepository extends JpaRepository<User, String> {
-    Optional<User> findUsersByKakaoId(String kakaoId);
+public interface UserRepository extends JpaRepository<User, String> {
+    Optional<User> findUserByKakaoId(String kakaoId);
 }

@@ -44,6 +44,7 @@ public class RecordController {
 
     /**
      * 월별 record 기록 요청
+     * 이 부분 ㅈ나 이상함 맞는 건지 모르겠음...
      */
     @GetMapping("/{kakaoId}")
     public List<ResponseDietRecord> getRecordList(
@@ -71,8 +72,8 @@ public class RecordController {
     /**
      * 개별 record 기록 삭제
      */
-//    @DeleteMapping("/{recordId}")
-//    public void deleteRecord(@PathVariable Long recordId) {
-//        dietRecordService.deleteDietRecord(recordId);
-//    }
+    @DeleteMapping("/{recordId}")
+    public void deleteRecord(@PathVariable Long recordId) {
+        dietRecordService.deleteDietRecord(recordId);
+    }
 }

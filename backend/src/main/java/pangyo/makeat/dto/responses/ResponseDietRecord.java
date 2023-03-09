@@ -11,9 +11,7 @@ public class ResponseDietRecord {
 
     private String date;
 
-    private String createdAt;
-
-    private String updatedAt;
+    private String time;
 
     private String comment;
 
