@@ -4,7 +4,7 @@ import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pangyo.makeat.responses.ResponseDietRecord;
+import pangyo.makeat.dto.responses.ResponseDietRecord;
 import pangyo.makeat.entity.*;
 import pangyo.makeat.repository.*;
 

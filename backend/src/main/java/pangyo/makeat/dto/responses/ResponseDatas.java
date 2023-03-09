@@ -1,4 +1,4 @@
-package pangyo.makeat.responses;
+package pangyo.makeat.dto.responses;
 
 import lombok.Getter;
 import lombok.Setter;

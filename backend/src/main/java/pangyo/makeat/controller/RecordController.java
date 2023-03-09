@@ -3,9 +3,9 @@ package pangyo.makeat.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pangyo.makeat.requests.PutRecord;
-import pangyo.makeat.requests.SaveRecord;
-import pangyo.makeat.responses.ResponseDietRecord;
+import pangyo.makeat.dto.requests.PutRecord;
+import pangyo.makeat.dto.requests.SaveRecord;
+import pangyo.makeat.dto.responses.ResponseDietRecord;
 import pangyo.makeat.service.DietRecordService;
 import java.util.List;
 
