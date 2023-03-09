@@ -1,11 +1,11 @@
 package pangyo.makeat.dto.responses;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import pangyo.makeat.entity.Nutrient;
 
-@Getter
-@Setter
+@Data
 public class ResponseDietRecord {
     private Long recordId;
 
