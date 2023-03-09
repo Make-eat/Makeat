@@ -16,7 +16,7 @@ public class SaveRecord {
 
     private String analyzedImgUrl;
 
-    private float carbohydrate;
+    private float carb;
 
     private float protein;
 

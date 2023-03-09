@@ -34,7 +34,7 @@ public class DietRecordService {
     @Transactional
     public void saveDietRecord(
             String kakaoId, String date, String time, String comment, String imgUrl, String analyzedImgUrl,
-            float carbohydrate, float protein, float fat, float na, float kcal
+            float carb, float protein, float fat, float na, float kcal
     ) {
         User user = usersRepository.findUsersByKakaoId(kakaoId).get();
 
@@ -52,7 +52,7 @@ public class DietRecordService {
 
         // Nutrient 저장
         Nutrient nutrient = new Nutrient();
-        nutrient.setCarbohydrate(carbohydrate);
+        nutrient.setCarb(carb);
         nutrient.setProtein(protein);
         nutrient.setFat(fat);
         nutrient.setNa(na);
@@ -110,7 +110,7 @@ public class DietRecordService {
 
         if (nutrientTotal == null) {    // 테이블이 없는 경우
             nutrientTotal = new NutrientTotal();
-            nutrientTotal.setTotalCarbohydrate(nutrient.getCarbohydrate());
+            nutrientTotal.setTotalCarb(nutrient.getCarb());
             nutrientTotal.setTotalProtein(nutrient.getProtein());
             nutrientTotal.setTotalFat(nutrient.getFat());
             nutrientTotal.setTotalNa(nutrient.getNa());
@@ -121,7 +121,7 @@ public class DietRecordService {
 
         }else{  // 테이블이 있는 경우
             // DietRecord 를 findAll 해서 매번 계산해 주는게 베스트일거같긴 한데.. 귀찮아 ㅋ 나중에 고민해봄
-            nutrientTotal.setTotalCarbohydrate(nutrient.getCarbohydrate() + nutrientTotal.getTotalCarbohydrate());
+            nutrientTotal.setTotalCarb(nutrient.getCarb() + nutrientTotal.getTotalCarb());
             nutrientTotal.setTotalProtein(nutrient.getProtein() + nutrientTotal.getTotalProtein());
             nutrientTotal.setTotalFat(nutrient.getFat() + nutrientTotal.getTotalFat());
             nutrientTotal.setTotalNa(nutrient.getNa() + nutrientTotal.getTotalNa());
@@ -158,7 +158,7 @@ public class DietRecordService {
 //    public void subNutrientTotal(String date, Nutrient nutrient) {
 //        NutrientTotal nutrientTotal = nutrientTotalRepository.findNutrientTotalByDate(date);
 //
-//        nutrientTotal.setTotalCarbohydrate(nutrientTotal.getTotalCarbohydrate() - nutrient.getCarbohydrate());
+//        nutrientTotal.setTotalCarb(nutrientTotal.getTotalCarb() - nutrient.getCarbohydrate());
 //        nutrientTotal.setTotalProtein(nutrientTotal.getTotalProtein() - nutrient.getProtein());
 //        nutrientTotal.setTotalFat(nutrientTotal.getTotalFat() - nutrient.getFat());
 //        nutrientTotal.setTotalNa(nutrientTotal.getTotalNa() - nutrient.getNa());

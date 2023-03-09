@@ -30,7 +30,7 @@ public class RecordController {
         String comment = saveRecord.getComment();
         String imgUrl = saveRecord.getImgUrl();
         String analyzedImgUrl = saveRecord.getAnalyzedImgUrl();
-        float carbohydrate = saveRecord.getCarbohydrate();
+        float carb = saveRecord.getCarb();
         float protein = saveRecord.getProtein();
         float fat = saveRecord.getFat();
         float na = saveRecord.getNa();
@@ -38,7 +38,7 @@ public class RecordController {
 
 
         dietRecordService.saveDietRecord(
-                kakaoId, date, time, comment, imgUrl, analyzedImgUrl, carbohydrate, protein, fat, na, kcal
+                kakaoId, date, time, comment, imgUrl, analyzedImgUrl, carb, protein, fat, na, kcal
         );
     }
 
