@@ -3,7 +3,8 @@ package pangyo.makeat.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pangyo.makeat.requests.RequestRecord;
+import pangyo.makeat.requests.PutRecord;
+import pangyo.makeat.requests.SaveRecord;
 import pangyo.makeat.responses.ResponseDietRecord;
 import pangyo.makeat.service.DietRecordService;
 import java.util.List;
@@ -22,15 +23,23 @@ public class RecordController {
     @PostMapping("/save/{kakaoId}")
     public void saveRecord(
             @PathVariable String kakaoId,
-            @RequestBody RequestRecord requestRecord
+            @RequestBody SaveRecord saveRecord
             ) {
-        String date = requestRecord.getDate();
-        String createdAt = requestRecord.getCreatedAt();
-        String updatedAt = requestRecord.getUpdatedAt();
-        String comment = requestRecord.getComment();
-        Long analyzedDataId = requestRecord.getAnalyzedDataId();
+        String date = saveRecord.getDate();
+        String time = saveRecord.getTime();
+        String comment = saveRecord.getComment();
+        String imgUrl = saveRecord.getImgUrl();
+        String analyzedImgUrl = saveRecord.getAnalyzedImgUrl();
+        float carbohydrate = saveRecord.getCarbohydrate();
+        float protein = saveRecord.getProtein();
+        float fat = saveRecord.getFat();
+        float na = saveRecord.getNa();
+        float kcal = saveRecord.getKcal();
 
-        dietRecordService.saveDietRecord(kakaoId, date, createdAt, updatedAt, comment, String.valueOf(analyzedDataId));
+
+        dietRecordService.saveDietRecord(
+                kakaoId, date, time, comment, imgUrl, analyzedImgUrl, carbohydrate, protein, fat, na, kcal
+        );
     }
 
     /**
@@ -50,22 +59,20 @@ public class RecordController {
     @PutMapping("/{recordId}")
     public void putRecord(
             @PathVariable String recordId,
-            @RequestBody RequestRecord requestRecord
+            @RequestBody PutRecord putRecord
     ) {
-        String date = requestRecord.getDate();
-        String createdAt = requestRecord.getCreatedAt();
-        String updatedAt = requestRecord.getUpdatedAt();
-        String comment = requestRecord.getComment();
-        Long analyzedDataId = requestRecord.getAnalyzedDataId();
+        String date = putRecord.getDate();
+        String time = putRecord.getTime();
+        String comment = putRecord.getComment();
 
-        dietRecordService.putDietRecord(recordId, date, createdAt, updatedAt, comment, String.valueOf(analyzedDataId));
+        dietRecordService.putDietRecord(recordId, date, time, comment);
     }
 
     /**
      * 개별 record 기록 삭제
      */
-    @DeleteMapping("/{recordId}")
-    public void deleteRecord(@PathVariable Long recordId) {
-        dietRecordService.deleteDietRecord(recordId);
-    }
+//    @DeleteMapping("/{recordId}")
+//    public void deleteRecord(@PathVariable Long recordId) {
+//        dietRecordService.deleteDietRecord(recordId);
+//    }
 }

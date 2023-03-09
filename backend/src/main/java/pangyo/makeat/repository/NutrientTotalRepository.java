@@ -1,13 +1,12 @@
 package pangyo.makeat.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import pangyo.makeat.dto.NutrientTotal;
-import pangyo.makeat.dto.Users;
+import pangyo.makeat.entity.NutrientTotal;
+import pangyo.makeat.entity.User;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface NutrientTotalRepository extends JpaRepository<NutrientTotal, String> {
-    NutrientTotal findNutrientTotalByDate(String date);
-    List<NutrientTotal> findAllByUsersAndYearMonth(Users users, String yearMonth);
+    NutrientTotal findNutrientTotalByDateAndUser(String date, User user);
+    List<NutrientTotal> findAllByUserAndYearMonth(User user, String yearMonth);
 }

@@ -2,7 +2,7 @@ package pangyo.makeat.responses;
 
 import lombok.Getter;
 import lombok.Setter;
-import pangyo.makeat.dto.Nutrient;
+import pangyo.makeat.entity.Nutrient;
 
 @Getter
 @Setter

@@ -3,7 +3,7 @@ package pangyo.makeat.service;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pangyo.makeat.dto.Users;
+import pangyo.makeat.entity.User;
 import pangyo.makeat.repository.UsersRepository;
 
 import java.util.List;
@@ -17,26 +17,26 @@ public class UsersService {
 
     @Transactional
     public void saveUser(String kakaoId){
-        Users users = new Users();
-        users.setKakaoId(kakaoId);
-        usersRepository.save(users);
+        User user = new User();
+        user.setKakaoId(kakaoId);
+        usersRepository.save(user);
     }
 
     //개발자 확인용 코드. 내용 아니라 주소 리턴돼서 수정 필요
     public void findAllUsers() {
-        List<Users> usersList = usersRepository.findAll();
-        for (int i=0; i < usersList.size(); i++){
-            System.out.println(usersList.get(i));
+        List<User> userList = usersRepository.findAll();
+        for (int i = 0; i < userList.size(); i++){
+            System.out.println(userList.get(i));
         }
     }
 
-    public Optional<Users> findUsers(String kakaoId) {
-        Optional<Users> users = usersRepository.findUsersByKakaoId(kakaoId);
+    public Optional<User> findUsers(String kakaoId) {
+        Optional<User> users = usersRepository.findUsersByKakaoId(kakaoId);
         return users;
     }
 
     public boolean checkExistUsers(String kakaoId) {
-        Optional<Users> users = usersRepository.findUsersByKakaoId(kakaoId);
+        Optional<User> users = usersRepository.findUsersByKakaoId(kakaoId);
         if (users.isPresent()) { //이미 가입된 사용자
             return true;
         }

@@ -1,4 +1,4 @@
-package pangyo.makeat.dto;
+package pangyo.makeat.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter // setter는 리팩토링 하면서 빼야함
-public class Users {
+public class User {
     @Id @GeneratedValue
     @Column(name="user_id")
     private Long userId;

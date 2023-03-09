@@ -5,7 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pangyo.makeat.dto.UserInfo;
+import pangyo.makeat.entity.UserInfo;
 import pangyo.makeat.service.UserInfoService;
 import pangyo.makeat.service.UsersService;
 
@@ -16,7 +16,7 @@ import java.util.Optional;
 @Slf4j
 @RestController
 @RequestMapping("/users")
-public class UsersController {
+public class UserController {
     @Autowired
     UserInfoService uis;
     @Autowired
