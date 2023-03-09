@@ -1,5 +1,6 @@
 package pangyo.makeat.service;
 
+import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,21 +12,17 @@ import pangyo.makeat.repository.*;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class DietRecordService {
 
-    @Autowired
     DietRecordRepository dietRecordRepository;
 
-    @Autowired
     UserRepository userRepository;
 
-    @Autowired
     AnalyzeRepository analyzeRepository;
 
-    @Autowired
     NutrientRepository nutrientRepository;
 
-    @Autowired
     NutrientTotalRepository nutrientTotalRepository;
 
     /**

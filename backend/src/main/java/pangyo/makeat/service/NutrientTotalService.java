@@ -1,5 +1,6 @@
 package pangyo.makeat.service;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,14 +14,12 @@ import java.util.List;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class NutrientTotalService {
-    @Autowired
     NutrientTotalRepository nutrientTotalRepository;
 
-    @Autowired
     UserRepository userRepository;
 
-    @Autowired
     DietRecordRepository dietRecordRepository;
 
     public List<NutrientTotal> getNutrientTotalList(String kakaoId, String yearMonth) {
