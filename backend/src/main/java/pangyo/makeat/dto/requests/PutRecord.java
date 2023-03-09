@@ -1,10 +1,10 @@
 package pangyo.makeat.dto.requests;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 public class PutRecord {
     private String date;
 
