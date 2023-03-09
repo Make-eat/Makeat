@@ -1,4 +1,4 @@
-package pangyo.makeat.requests;
+package pangyo.makeat.dto.requests;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +16,7 @@ public class SaveRecord {
 
     private String analyzedImgUrl;
 
-    private float carbohydrate;
+    private float carb;
 
     private float protein;
 

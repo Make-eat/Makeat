@@ -1,4 +1,4 @@
-package pangyo.makeat.requests;
+package pangyo.makeat.dto.requests;
 
 import lombok.Getter;
 import lombok.Setter;

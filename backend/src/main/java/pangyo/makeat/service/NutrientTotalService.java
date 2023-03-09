@@ -7,7 +7,7 @@ import pangyo.makeat.entity.NutrientTotal;
 import pangyo.makeat.entity.User;
 import pangyo.makeat.repository.DietRecordRepository;
 import pangyo.makeat.repository.NutrientTotalRepository;
-import pangyo.makeat.repository.UsersRepository;
+import pangyo.makeat.repository.UserRepository;
 
 import java.util.List;
 
@@ -18,13 +18,13 @@ public class NutrientTotalService {
     NutrientTotalRepository nutrientTotalRepository;
 
     @Autowired
-    UsersRepository usersRepository;
+    UserRepository userRepository;
 
     @Autowired
     DietRecordRepository dietRecordRepository;
 
     public List<NutrientTotal> getNutrientTotalList(String kakaoId, String yearMonth) {
-        User user = usersRepository.findUsersByKakaoId(kakaoId).get();
+        User user = userRepository.findUserByKakaoId(kakaoId).get();
         List<NutrientTotal> nutrientTotalList = nutrientTotalRepository.findAllByUserAndYearMonth(user, yearMonth);
 
         return nutrientTotalList;

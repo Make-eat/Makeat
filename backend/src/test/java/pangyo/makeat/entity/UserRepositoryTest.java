@@ -3,7 +3,7 @@ package pangyo.makeat.entity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import pangyo.makeat.repository.UsersRepository;
+import pangyo.makeat.repository.UserRepository;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @SpringBootTest
 public class UserRepositoryTest {
     @Autowired
-    UsersRepository usersRepository;
+    UserRepository userRepository;
 
 //    @AfterEach
 //    public void cleanup() {
@@ -28,7 +28,7 @@ public class UserRepositoryTest {
 
         user.setKakaoId(kakaoId);
 
-        usersRepository.save(user);
+        userRepository.save(user);
 
         User user2 = new User();
 
@@ -36,10 +36,10 @@ public class UserRepositoryTest {
 
         user.setKakaoId(kakaoId2);
 
-        usersRepository.save(user2);
+        userRepository.save(user2);
 
         //when
-        List<User> userList = usersRepository.findAll();
+        List<User> userList = userRepository.findAll();
 
         //then
         User users = userList.get(1);

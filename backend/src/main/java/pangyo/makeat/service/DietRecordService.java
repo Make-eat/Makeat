@@ -4,7 +4,7 @@ import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pangyo.makeat.responses.ResponseDietRecord;
+import pangyo.makeat.dto.responses.ResponseDietRecord;
 import pangyo.makeat.entity.*;
 import pangyo.makeat.repository.*;
 
@@ -17,7 +17,7 @@ public class DietRecordService {
     DietRecordRepository dietRecordRepository;
 
     @Autowired
-    UsersRepository usersRepository;
+    UserRepository userRepository;
 
     @Autowired
     AnalyzeRepository analyzeRepository;
@@ -34,9 +34,9 @@ public class DietRecordService {
     @Transactional
     public void saveDietRecord(
             String kakaoId, String date, String time, String comment, String imgUrl, String analyzedImgUrl,
-            float carbohydrate, float protein, float fat, float na, float kcal
+            float carb, float protein, float fat, float na, float kcal
     ) {
-        User user = usersRepository.findUsersByKakaoId(kakaoId).get();
+        User user = userRepository.findUserByKakaoId(kakaoId).get();
 
         /**
          * AnalyzedData 저장 -> Nutrient 저장 -> NutrientTotal 에 반영 -> DietRecord 저장
@@ -52,7 +52,7 @@ public class DietRecordService {
 
         // Nutrient 저장
         Nutrient nutrient = new Nutrient();
-        nutrient.setCarbohydrate(carbohydrate);
+        nutrient.setCarb(carb);
         nutrient.setProtein(protein);
         nutrient.setFat(fat);
         nutrient.setNa(na);
@@ -60,8 +60,7 @@ public class DietRecordService {
 
         Nutrient savedNutrient = nutrientRepository.save(nutrient);
 
-        // NutrientTotal 에 반영
-        // date 와 user 비교해서 TotalNutrient 에 반영
+        // NutrientTotal 계산
         NutrientTotal savedNutrientTotal = calculateNutrientTotal(date, user, savedNutrient);
 
         // DietRecord 저장
@@ -110,7 +109,7 @@ public class DietRecordService {
 
         if (nutrientTotal == null) {    // 테이블이 없는 경우
             nutrientTotal = new NutrientTotal();
-            nutrientTotal.setTotalCarbohydrate(nutrient.getCarbohydrate());
+            nutrientTotal.setTotalCarb(nutrient.getCarb());
             nutrientTotal.setTotalProtein(nutrient.getProtein());
             nutrientTotal.setTotalFat(nutrient.getFat());
             nutrientTotal.setTotalNa(nutrient.getNa());
@@ -121,7 +120,7 @@ public class DietRecordService {
 
         }else{  // 테이블이 있는 경우
             // DietRecord 를 findAll 해서 매번 계산해 주는게 베스트일거같긴 한데.. 귀찮아 ㅋ 나중에 고민해봄
-            nutrientTotal.setTotalCarbohydrate(nutrient.getCarbohydrate() + nutrientTotal.getTotalCarbohydrate());
+            nutrientTotal.setTotalCarb(nutrient.getCarb() + nutrientTotal.getTotalCarb());
             nutrientTotal.setTotalProtein(nutrient.getProtein() + nutrientTotal.getTotalProtein());
             nutrientTotal.setTotalFat(nutrient.getFat() + nutrientTotal.getTotalFat());
             nutrientTotal.setTotalNa(nutrient.getNa() + nutrientTotal.getTotalNa());
@@ -136,36 +135,34 @@ public class DietRecordService {
      * 개별 Record 기록 삭제
      * @param recordId
      */
-//    @Transactional
-//    public void deleteDietRecord(Long recordId) {
-//        DietRecord dietRecord = dietRecordRepository.findById(String.valueOf(recordId)).get();
-//        Nutrient nutrient = dietRecord.getNutrient();
-//
-//        // NutrientTotal 에서 값 계산
-//        subNutrientTotal(dietRecord.getDate(), nutrient);
-//
-//        dietRecordRepository.delete(dietRecord);
-//        nutrientRepository.delete(nutrient);
-//    }
+    @Transactional
+    public void deleteDietRecord(Long recordId) {
+        DietRecord dietRecord = dietRecordRepository.findById(String.valueOf(recordId)).get();
+        Nutrient nutrient = dietRecord.getNutrient();
+
+        // 해당 Record 에서 NutrientTotal 뽑아냄
+        NutrientTotal nutrientTotal = dietRecord.getNutrientTotal();
+
+        // NutrientTotal 값 계산
+        subNutrientTotal(nutrientTotal, nutrient);
+
+        dietRecordRepository.delete(dietRecord);
+        nutrientRepository.delete(nutrient);
+    }
 
     /**
      * 값 계산
-     * @param date
-     * @param nutrient
-     * @return
      */
-//    @Transactional
-//    public void subNutrientTotal(String date, Nutrient nutrient) {
-//        NutrientTotal nutrientTotal = nutrientTotalRepository.findNutrientTotalByDate(date);
-//
-//        nutrientTotal.setTotalCarbohydrate(nutrientTotal.getTotalCarbohydrate() - nutrient.getCarbohydrate());
-//        nutrientTotal.setTotalProtein(nutrientTotal.getTotalProtein() - nutrient.getProtein());
-//        nutrientTotal.setTotalFat(nutrientTotal.getTotalFat() - nutrient.getFat());
-//        nutrientTotal.setTotalNa(nutrientTotal.getTotalNa() - nutrient.getNa());
-//        nutrientTotal.setTotalKcal(nutrientTotal.getTotalKcal() - nutrient.getKcal());
-//
-//        nutrientTotalRepository.save(nutrientTotal);
-//    }
+    @Transactional
+    public void subNutrientTotal(NutrientTotal nutrientTotal, Nutrient nutrient) {
+        nutrientTotal.setTotalCarb(nutrientTotal.getTotalCarb() - nutrient.getCarb());
+        nutrientTotal.setTotalProtein(nutrientTotal.getTotalProtein() - nutrient.getProtein());
+        nutrientTotal.setTotalFat(nutrientTotal.getTotalFat() - nutrient.getFat());
+        nutrientTotal.setTotalNa(nutrientTotal.getTotalNa() - nutrient.getNa());
+        nutrientTotal.setTotalKcal(nutrientTotal.getTotalKcal() - nutrient.getKcal());
+
+        nutrientTotalRepository.save(nutrientTotal);
+    }
 
     /**
      * 월별 record 기록 요청
@@ -176,7 +173,7 @@ public class DietRecordService {
     public List<ResponseDietRecord> getDietRecordList(String kakaoId, String yearMonth) {
         List<ResponseDietRecord> responseDietRecordList = new JSONArray();
 
-        User user = usersRepository.findUsersByKakaoId(kakaoId).get();
+        User user = userRepository.findUserByKakaoId(kakaoId).get();
         List<DietRecord> dietRecordList = dietRecordRepository.findAllByUserAndYearMonth(user, yearMonth);
 
         dietRecordList.stream().map(record ->{
@@ -185,8 +182,6 @@ public class DietRecordService {
 
             responseDietRecord.setRecordId(record.getRecordId());
             responseDietRecord.setDate(record.getDate());
-            responseDietRecord.setCreatedAt(record.getCreatedAt());
-            responseDietRecord.setUpdatedAt(record.getUpdatedAt());
             responseDietRecord.setComment(record.getComment());
             responseDietRecord.setImgUrl(analyzedData.getImgUrl());
             responseDietRecord.setImgUrl(analyzedData.getAnalyzedImgUrl());

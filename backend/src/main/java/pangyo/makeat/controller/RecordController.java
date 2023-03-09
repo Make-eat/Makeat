@@ -3,9 +3,9 @@ package pangyo.makeat.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pangyo.makeat.requests.PutRecord;
-import pangyo.makeat.requests.SaveRecord;
-import pangyo.makeat.responses.ResponseDietRecord;
+import pangyo.makeat.dto.requests.PutRecord;
+import pangyo.makeat.dto.requests.SaveRecord;
+import pangyo.makeat.dto.responses.ResponseDietRecord;
 import pangyo.makeat.service.DietRecordService;
 import java.util.List;
 
@@ -30,7 +30,7 @@ public class RecordController {
         String comment = saveRecord.getComment();
         String imgUrl = saveRecord.getImgUrl();
         String analyzedImgUrl = saveRecord.getAnalyzedImgUrl();
-        float carbohydrate = saveRecord.getCarbohydrate();
+        float carb = saveRecord.getCarb();
         float protein = saveRecord.getProtein();
         float fat = saveRecord.getFat();
         float na = saveRecord.getNa();
@@ -38,12 +38,13 @@ public class RecordController {
 
 
         dietRecordService.saveDietRecord(
-                kakaoId, date, time, comment, imgUrl, analyzedImgUrl, carbohydrate, protein, fat, na, kcal
+                kakaoId, date, time, comment, imgUrl, analyzedImgUrl, carb, protein, fat, na, kcal
         );
     }
 
     /**
      * 월별 record 기록 요청
+     * 이 부분 ㅈ나 이상함 맞는 건지 모르겠음...
      */
     @GetMapping("/{kakaoId}")
     public List<ResponseDietRecord> getRecordList(
@@ -71,8 +72,8 @@ public class RecordController {
     /**
      * 개별 record 기록 삭제
      */
-//    @DeleteMapping("/{recordId}")
-//    public void deleteRecord(@PathVariable Long recordId) {
-//        dietRecordService.deleteDietRecord(recordId);
-//    }
+    @DeleteMapping("/{recordId}")
+    public void deleteRecord(@PathVariable Long recordId) {
+        dietRecordService.deleteDietRecord(recordId);
+    }
 }

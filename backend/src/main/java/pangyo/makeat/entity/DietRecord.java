@@ -36,9 +36,5 @@ public class DietRecord {
     @Column(name="year_month")
     private String yearMonth;
 
-    private String createdAt;
-
-    private String updatedAt;
-
     private String comment; // 한줄평
 }

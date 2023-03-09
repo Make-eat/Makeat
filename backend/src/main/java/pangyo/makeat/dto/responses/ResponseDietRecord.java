@@ -1,4 +1,4 @@
-package pangyo.makeat.responses;
+package pangyo.makeat.dto.responses;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,9 +11,7 @@ public class ResponseDietRecord {
 
     private String date;
 
-    private String createdAt;
-
-    private String updatedAt;
+    private String time;
 
     private String comment;
 

@@ -13,8 +13,8 @@ public class NutrientTotal {
     @Column(name = "total_id")
     private Long totalId;
 
-    @Column(name = "total_carbohydrate")
-    private float totalCarbohydrate;
+    @Column(name = "total_carb")
+    private float totalCarb;
 
     @Column(name = "total_protein")
     private float totalProtein;

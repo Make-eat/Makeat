@@ -15,7 +15,7 @@ public class Nutrient {
     @Column(name = "nut_id")
     private Long nutId;
 
-    private float carbohydrate;
+    private float carb;
 
     private float protein;
 
